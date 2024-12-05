@@ -1,0 +1,142 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Aulas index{% endblock %}
+
+{% block body %}
+<style>
+        .sidebar {
+            width: 200px; /* Ajusta el ancho de la barra lateral */
+            height: 100vh;
+            background-color: #cfeff6;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Centra los botones verticalmente */
+            align-items: center; /* Centra los botones horizontalmente */
+            
+        }
+
+        .sidebar .btn {
+            width: 100%; /* Asegura que los botones ocupen todo el ancho disponible */
+            text-align: center; /* Centra el texto */
+            background-color: #d3d3d3;
+            margin-bottom: 50px; /* Ajusta el margen entre botones */
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            padding: 10px;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        .data-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+            display: none; /* Inicialmente oculto */
+        }
+
+        .data-buttons .btn {
+            background-color: #6c757d;
+            color: white;
+            height: 150px;
+            border-radius: 5px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+    </style>
+    <!-- Encabezado -->
+    <header>
+        <nav class="navbar navbar-light bg-light position-relative">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{{path('app_login')}}">
+                    <img src="https://i.ibb.co/8m8GYfT/Logo-Uni.jpg" alt="UNI Logo" width="50">
+                </a>
+                <span class="navbar-text position-absolute top-50 start-50 translate-middle">
+                    Universidad Nacional de Ingeniería
+                </span>
+                <div class="d-flex align-items-center ms-auto">
+                    <form class="d-flex me-2">
+                        <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Buscar">
+                        <button class="btn btn-outline-success" type="submit">Buscar</button>
+                    </form>
+                    <span class="navbar-text">
+                        {{ app.user.userIdentifier }} <a href="{{ path('app_logout') }}">(Cerrar Sesión)</a>
+                    </span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="d-flex">
+        <!-- Barra lateral -->
+        <div class="sidebar p-3">
+            <a class="btn" href="{{ path('app_medios_index') }}">Medios</a>
+            <a class="btn" href="{{ path('app_usuariouni_index') }}">Usuarios</a>
+            <a class="btn" href="{{ path('app_aulas_index') }}">Aulas</a>
+            <a class="btn" href="{{ path('app_reservaciones_index') }}">Reservas</a>
+        </div>
+
+        <!-- Contenido -->
+        <div class="content flex-grow-1 p-4">
+            <div class="action-buttons d-flex justify-content-between mb-3">
+                <a href="{{ path('app_aulas_new') }}" class="btn btn-success">Nuevo</a>
+                
+            </div>
+
+            <!-- Tabla de medios -->
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Codigo</th>
+                            <th>Pabellon</th>
+                            <th>actions</th>
+                        </tr>
+                    <tbody>
+                    {% for aula in aulas %}
+                        <tr>
+                            <td>{{ aula.id }}</td>
+                            <td>{{ aula.codigo }}</td>
+                            <td>{{ aula.pabellon }}</td>
+                            <td>
+                                <a href="{{ path('app_aulas_show', {'id': aula.id}) }}" class="btn btn-info btn-sm">Ver</a>
+                                <a href="{{ path('app_aulas_edit', {'id': aula.id}) }}" class="btn btn-primary btn-sm">Editar</a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="4" class="text-center">No hay registros</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pie de página -->
+    <footer class="bg-light text-center py-3">
+        <p>© UNI</p>
+        <p>Contáctenos | Sede Central Avenida Universitaria | Teléfono: (505) 2270-1509</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    {{ encore_entry_script_tags('Admin') }}
+</body>
+{% endblock %}

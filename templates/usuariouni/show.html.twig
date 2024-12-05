@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Usuariouni{% endblock %}
+
+{% block body %}
+    <h1>Usuariouni</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ usuariouni.id }}</td>
+            </tr>
+            <tr>
+                <th>Username</th>
+                <td>{{ usuariouni.username }}</td>
+            </tr>
+            <tr>
+                <th>Roles</th>
+                <td>{{ usuariouni.roles ? usuariouni.roles|json_encode : '' }}</td>
+            </tr>
+            <tr>
+                <th>Password</th>
+                <td>{{ usuariouni.password }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ usuariouni.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Apellido</th>
+                <td>{{ usuariouni.apellido }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_usuariouni_index') }}">back to list</a>
+
+    <a href="{{ path('app_usuariouni_edit', {'id': usuariouni.id}) }}">edit</a>
+
+    {{ include('usuariouni/_delete_form.html.twig') }}
+{% endblock %}

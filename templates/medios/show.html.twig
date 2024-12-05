@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Medios{% endblock %}
+
+{% block body %}
+    <h1>Medios</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ medio.id }}</td>
+            </tr>
+            <tr>
+                <th>Cantidad</th>
+                <td>{{ medio.cantidad }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_medios_index') }}">back to list</a>
+
+    <a href="{{ path('app_medios_edit', {'id': medio.id}) }}">edit</a>
+
+    {{ include('medios/_delete_form.html.twig') }}
+{% endblock %}

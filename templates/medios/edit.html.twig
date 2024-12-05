@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Formulario de Medios{% endblock %}
+
+{% block body %}
+    <!-- Header -->
+    <header>
+        <nav class="navbar navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="Login.html">
+                    <img src="https://i.ibb.co/8m8GYfT/Logo-Uni.jpg" alt="UNI Logo" width="50">
+                </a>
+                <div class="d-flex justify-content-center">
+                    <a href="{{ path('app_medios_index') }}" class="btn btn-outline-secondary mx-auto">Inicio</a>
+                </div>
+                <span class="navbar-text">
+                    {{ app.user.userIdentifier }} <a href="{{ path('app_logout') }}">(Cerrar Sesión)</a>
+                </span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Formulario -->
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h1>Editar Medios</h1>
+
+                <!-- Formulario de Medios -->
+                {{ form_start(form) }}
+                    <div class="mb-3">
+                        <label for="tipoMedio" class="form-label">Tipo de medio</label>
+                        {{ form_widget(form.tipo_medio_id, { 'attr': {'class': 'form-control', 'placeholder': 'Escriba el tipo de medio'} }) }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="cantidad" class="form-label">Cantidad</label>
+                        {{ form_widget(form.cantidad, { 'attr': {'class': 'form-control', 'placeholder': 'Escriba la cantidad'} }) }}
+                    </div>
+
+                    <!-- Botón de envío -->
+                    <button type="submit" class="btn btn-primary w-100">{{ button_label|default('Editar') }}</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-light text-center py-3 fixed-bottom">
+        <p>© UNI</p>
+        <p>Contáctenos | Sede Central Avenida Universitaria | Teléfono: (505) 2270-1509</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

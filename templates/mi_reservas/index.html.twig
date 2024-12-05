@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mis Reservas{% endblock %}
+
+{% block body %}
+    <header>
+        <nav class="navbar navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{{ path('app_login') }}">
+                    <img src="https://i.ibb.co/8m8GYfT/Logo-Uni.jpg" alt="UNI Logo" width="50">
+                </a>
+                <div class="d-flex justify-content-center">
+                    <a href="{{ path('app_menu_docente') }}" class="btn btn-outline-secondary mx-auto">Inicio</a>
+                </div>
+                <span class="navbar-text">
+                    {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Cerrar Sesión</a>
+                </span>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container mt-5">
+        <h2>Mis Reservas</h2>
+
+        {% if reservas is not empty %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Medio</th>
+                        <th>Aula</th>
+                        <th>Fecha</th>
+                        <th>Hora de Inicio</th>
+                        <th>Hora de Finalización</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for reserva in reservas %}
+                        <tr>
+                            <td>{{ reserva.medios_id.tipo_medio_id.nombreMedio }}</td> <!-- El nombre del medio -->
+                            <td>{{ reserva.aulas_id.codigo }}</td> <!-- El código del aula -->
+                            <td>{{ reserva.fecha|date('d/m/Y') }}</td>
+                            <td>{{ reserva.horaInicio|date('H:i') }}</td>
+                            <td>{{ reserva.horaFinal|date('H:i') }}</td>
+                            <td>
+                                <form action="{{ path('app_reservaciones_cancelar', {id: reserva.id}) }}" method="post" onsubmit="return confirm('¿Estás seguro de cancelar esta reservación?');">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ reserva.id) }}">
+                                    <button type="submit" class="btn btn-danger btn-sm">Cancelar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No tienes reservaciones activas.</p>
+        {% endif %}
+    </div>
+
+    <footer class="bg-light text-center py-3 fixed-bottom">
+        <p>© UNI</p>
+        <p>Contáctenos | Sede Central Avenida Universitaria | Teléfono: (505) 2270-1509</p>
+    </footer>
+{% endblock %}
